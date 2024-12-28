@@ -1,0 +1,9 @@
+/vendor
+composer.lock
+package-lock.json
+.DS_Store
+/.fleet
+/.idea
+/.nova
+/.vscode
+/.zed
