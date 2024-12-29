@@ -7,13 +7,17 @@ $localPath = dirname(__DIR__) . '/vendor/autoload.php';
 
 if (file_exists($vendorPath)) {
 	include_once $vendorPath;
+	$autoloadPath = $vendorPath;
 } else {
 	include_once $localPath;
+	$autoloadPath = $localPath;
 }
+
+$basePath = dirname($autoloadPath, 2);
 
 $container = (new \DI\ContainerBuilder())
     ->addDefinitions([
-        \Codetiv\View\ViewRenderer::class => include __DIR__ . '/config/view.php',
+        \Codetiv\View\ViewRenderer::class => include $basePath . '/config/view.php',
     ])
     ->build();
 
@@ -21,7 +25,7 @@ $arguments = $argv ?? [];
 
 try {
     \Codetiv\Generator::boot(
-        basePath: __DIR__,
+        basePath: $basePath,
         container: $container
     )->run($arguments);
 } catch (\Throwable $e) {
