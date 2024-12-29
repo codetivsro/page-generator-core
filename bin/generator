@@ -1,0 +1,29 @@
+#!/usr/bin/env php
+<?php
+
+$vendorPath = dirname(__DIR__, 4) . '/vendor/autoload.php';
+
+$localPath = dirname(__DIR__) . '/vendor/autoload.php';
+
+if (file_exists($vendorPath)) {
+	include_once $vendorPath;
+} else {
+	include_once $localPath;
+}
+
+$container = (new \DI\ContainerBuilder())
+    ->addDefinitions([
+        \Codetiv\View\ViewRenderer::class => include __DIR__ . '/config/view.php',
+    ])
+    ->build();
+
+$arguments = $argv ?? [];
+
+try {
+    \Codetiv\Generator::boot(
+        basePath: __DIR__,
+        container: $container
+    )->run($arguments);
+} catch (\Throwable $e) {
+    echo "\e[0;30;41m ✕ Error \e[0m \e[0;31m" . $e->getMessage() . "\e[0m" . PHP_EOL;
+}

@@ -5,6 +5,9 @@
 			"Codetiv\\": "src/Codetiv/"
 		}
 	},
+	"bin": [
+		"bin/generator"
+	],
 	"require": {
 		"php-di/php-di": "^7.0",
 		"latte/latte": "^3.0"
